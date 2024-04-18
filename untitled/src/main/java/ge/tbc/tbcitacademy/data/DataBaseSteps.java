@@ -5,6 +5,8 @@ import ge.tbc.tbcitacademy.jdbcsteps.SQLConnection;
 import org.testng.Assert;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class DataBaseSteps {
@@ -43,7 +45,7 @@ public class DataBaseSteps {
         }
     }
 
-    public int insertPhones(String[] phoneNumbers) {
+    public int insertPhones() {
         try (Connection connection = SQLConnection.connect()) {
             String selectOwnersId = """
                     USE Registration;
@@ -55,6 +57,8 @@ public class DataBaseSteps {
                     INSERT INTO dbo.Phones VALUES(?,?);
                     """;
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            String[] phoneNumbers = {"568992235", "557318094", "238477277", "398478287", "348768728",
+                    "234766777", "384578788", "374587982"};
             int rows = 0;
             int index = phoneNumbers.length;
             while (index >= 0 && resultSet.next()) {
@@ -71,7 +75,7 @@ public class DataBaseSteps {
         }
     }
 
-    public int updateRegistrations(List<RegistrationData> dataList) {
+    public int updateRegistrations() {
         try (Connection connection = SQLConnection.connect()) {
             String selectOwnersId = """
                     USE Registration;
@@ -85,12 +89,16 @@ public class DataBaseSteps {
                     WHERE id = ?
                     """;
             PreparedStatement preparedStatement = null;
+            List<RegistrationData> data = new ArrayList<>(Arrays.asList(
+                    new RegistrationData("sadgac", "addr2"),
+                    new RegistrationData("samefo kari", "addr2")
+            ));
             int rows = 0;
             int i = 0;
             while (resultSet.next()) {
                 preparedStatement = connection.prepareStatement(numbersAndDataQuery);
-                preparedStatement.setString(1, dataList.get(i).getAddress1());
-                preparedStatement.setString(2, dataList.get(i).getAddress2());
+                preparedStatement.setString(1, data.get(i).getAddress1());
+                preparedStatement.setString(2, data.get(i).getAddress2());
                 preparedStatement.setInt(3, resultSet.getInt("id"));
                 rows += preparedStatement.executeUpdate();
                 i++;
@@ -102,7 +110,7 @@ public class DataBaseSteps {
         }
     }
 
-    public int updatePhoneNumbers(String[] phoneNumbers) {
+    public int updatePhoneNumbers() {
         try (Connection connection = SQLConnection.connect()) {
             String selectOwnersId = """
                     USE Registration;
@@ -115,6 +123,7 @@ public class DataBaseSteps {
                     SET phoneNumber = ?
                     WHERE ownerId = ?
                     """;
+            String[] phoneNumbers = new String[]{"238472722", "329848232"};
             PreparedStatement preparedStatement = null;
             int rows = 0;
             int i = 0;

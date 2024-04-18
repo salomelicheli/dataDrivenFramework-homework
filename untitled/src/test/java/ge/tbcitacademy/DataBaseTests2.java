@@ -22,9 +22,7 @@ public class DataBaseTests2 {
     }
     @Test
     public void insertNumbers() {
-        String[] phoneNumbers = {"568992235", "557318094", "238477277", "398478287", "348768728",
-                "234766777", "384578788", "374587982"};
-        int rows = dbSteps.insertPhones(phoneNumbers);
+        int rows = dbSteps.insertPhones();
         System.out.println(rows + rowsAffected);
     }
     @Test
@@ -46,17 +44,12 @@ public class DataBaseTests2 {
     }
     @Test
     public void updateRegistrationValues() {
-        List<RegistrationData> data = new ArrayList<>(Arrays.asList(
-                new RegistrationData("sadgac", "addr2"),
-                new RegistrationData("samefo kari", "addr2")
-        ));
-        int rows = dbSteps.updateRegistrations(data);
+        int rows = dbSteps.updateRegistrations();
         System.out.println(rows + rowsAffected);
     }
     @Test
     public void updateNumberValues() {
-        String[] phoneNumbers = new String[]{"238472722", "329848232"};
-        int rows = dbSteps.updatePhoneNumbers(phoneNumbers);
+        int rows = dbSteps.updatePhoneNumbers();
         System.out.println(rows + rowsAffected);
     }
     @Test(dataProvider = "dataProvider", dataProviderClass = DataBaseProvider.class)
